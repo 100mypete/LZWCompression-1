@@ -4,14 +4,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 public class Decoder {
-	private int sizeOfByte;
+
 	private HashMap<Integer, String> dictionary;
 	private byte[] fileContents;
 	private int sizeOfDictionary;
 	
 	
-	public Decoder(String fileName, int sizeOfByte) {
-		this.sizeOfByte = sizeOfByte;
+	public Decoder(String fileName) {
 		sizeOfDictionary = 0;
 		//code below puts in normal chars into the table
 		dictionary = new HashMap<Integer, String> ();
@@ -47,8 +46,8 @@ public class Decoder {
 		}
 		
 		
+		System.out.println(decode (strBuilder.toString())); 
 		
-		System.out.println(decode (strBuilder.toString()));
 		
 	}
 	
@@ -68,8 +67,8 @@ public class Decoder {
 		 * parses String into proper size of each byte
 		 */
 		ArrayList<Integer> parsedInts = new ArrayList<Integer>();
-		for (int i = 0; i < toBeDecoded.length()-sizeOfByte; i+=sizeOfByte) {
-			String toBeChanged = toBeDecoded.substring(i,i+sizeOfByte);
+		for (int i = 0; i < toBeDecoded.length()-9; i+=9) {
+			String toBeChanged = toBeDecoded.substring(i,i+9);
 			parsedInts.add(binStringToInteger(toBeChanged));
 		}
 		
@@ -112,6 +111,10 @@ public class Decoder {
 	}
 	
 	public static void main (String [] args) {
-		Decoder tester = new Decoder ("encodeTest.bin", 9);
+		long startTime = System.nanoTime();
+		Decoder tester = new Decoder ("encodeTest.bin");
+		long endTime = System.nanoTime();
+		long duration = (endTime - startTime) / 1000000;
+		System.out.println ("" + duration + " ms");
 	}
 }
