@@ -112,7 +112,7 @@ public class Decoder {
 	
 	public static void main (String [] args) {
 		long startTime = System.nanoTime();
-		Decoder tester = new Decoder ("encodeTest.bin");
+		Decoder tester = new Decoder ("output1.dat");
 		long endTime = System.nanoTime();
 		long duration = (endTime - startTime) / 1000000;
 		System.out.println ("" + duration + " ms");
