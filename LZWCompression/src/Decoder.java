@@ -1,8 +1,10 @@
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.io.*;
 public class Decoder {
 
 	private HashMap<Integer, String> dictionary;
@@ -10,7 +12,8 @@ public class Decoder {
 	private int sizeOfDictionary;
 	
 	
-	public Decoder(String fileName) {
+	
+	public Decoder(String fileName) throws IOException {
 		sizeOfDictionary = 0;
 		//code below puts in normal chars into the table
 		dictionary = new HashMap<Integer, String> ();
@@ -58,10 +61,11 @@ public class Decoder {
 	 * @param toBeDecoded is the String that was created by the binary file
 	 * @return the decoded message
 	 */
-	public String decode (String toBeDecoded) {
+	public String decode (String toBeDecoded) throws IOException {
 		
 		
 		StringBuilder toRet = new StringBuilder ();
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("sampleOutput.txt")));
 		
 		/**
 		 * parses String into proper size of each byte
@@ -86,7 +90,43 @@ public class Decoder {
 			toRet.append(current);
 		}
 		toRet.append(next);
+
+		// initial dictionary values
+		HashMap<Integer, String> map = new HashMap<Integer,String>();
+		for(int i = 0; i < 256; i++)
+			map.put(i, "" + (char)i);
 		
+		// decoding part, involving dictionary and writing to outputFile
+		int nextKey = 256;
+		int cur = parsedInts.get(0);
+		String str = map.get(cur);
+		String ch = "" + str.charAt(0);
+		out.print(str);
+		for(int i = 1; i < parsedInts.size(); i++)
+		{
+			int nex = parsedInts.get(i);
+
+			// adding keys to dictionary, reverse-engineering compression dictionary following LZW rules
+			if(!map.containsKey(nex))
+			{
+				str = map.get(cur);
+				str = str + ch;
+			}
+			else
+			{
+				str = map.get(nex);
+			}
+			out.print(str);
+			ch = "" + str.charAt(0);
+			map.put(nextKey, map.get(cur) + ch);
+			nextKey++;
+			cur = nex;
+		}
+		
+		out.println();
+		
+		out.close();
+
 		return toRet.toString();
 		
 	}
@@ -110,9 +150,9 @@ public class Decoder {
 		return convertedInt;
 	}
 	
-	public static void main (String [] args) {
+	public static void main (String [] args) throws IOException {
 		long startTime = System.nanoTime();
-		Decoder tester = new Decoder ("output1.dat");
+		Decoder tester = new Decoder ("encodeTest.bin");
 		long endTime = System.nanoTime();
 		long duration = (endTime - startTime) / 1000000;
 		System.out.println ("" + duration + " ms");
