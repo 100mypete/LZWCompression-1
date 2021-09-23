@@ -66,7 +66,7 @@ public class Decoder {
 		
 		StringBuilder toRet = new StringBuilder ();
 		FileInputStream in = new FileInputStream(inputFile);
-		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("output1.txt")));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outputFile)));
 		byte[] byteArray = in.readAllBytes();
 
 		
@@ -82,7 +82,7 @@ public class Decoder {
 		 * parses String into proper size of each byte
 		 */
 		ArrayList<Integer> parsedInts = new ArrayList<Integer>();
-		for (int i = 0; i <= toRet.length()-9; i+=9) {
+		for (int i = 0; i <= toRet.length() - 9; i += 9) {
 			parsedInts.add(binStringToInteger(toRet.substring(i,i+9)));
 		}
 
@@ -148,7 +148,7 @@ public class Decoder {
 	        for (int i = 0; i < 9; i++) {
 	
 	            if (input.charAt(i) == '1') {
-	                input += (1 << (8 - i));
+	                convertedInt += (1 << (8 - i));
 	            }
 	        }
         
