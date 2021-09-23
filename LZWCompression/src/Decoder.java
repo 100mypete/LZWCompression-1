@@ -171,7 +171,7 @@ public class Decoder {
 	
 	public static void main (String [] args) throws IOException {
 		long startTime = System.nanoTime();
-		decode("output3.bin", "output3.txt");
+		decode("output3.dat", "output3.txt");
 		long endTime = System.nanoTime();
 		long duration = (endTime - startTime) / 1000000;
 		System.out.println ("" + duration + " ms");
