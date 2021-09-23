@@ -1,19 +1,17 @@
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.io.*;
+
 public class Decoder {
 
-	private HashMap<Integer, String> dictionary;
-	private byte[] fileContents;
-	private int sizeOfDictionary;
+	// private HashMap<Integer, String> dictionary;
+	// private byte[] fileContents;
+	// private int sizeOfDictionary;
 	
 	
 	
-	public Decoder(String fileName) throws IOException {
+	// public Decoder(String fileName) throws IOException {
 		// sizeOfDictionary = 0;
 		// //code below puts in normal chars into the table
 		// dictionary = new HashMap<Integer, String> ();
@@ -52,7 +50,7 @@ public class Decoder {
 		// System.out.println(decode (strBuilder.toString())); 
 		
 		
-	}
+	// }
 	
 	
 	/**
@@ -173,7 +171,7 @@ public class Decoder {
 	
 	public static void main (String [] args) throws IOException {
 		long startTime = System.nanoTime();
-		decode("output1.dat", "output1.txt");
+		decode("output3.bin", "output3.txt");
 		long endTime = System.nanoTime();
 		long duration = (endTime - startTime) / 1000000;
 		System.out.println ("" + duration + " ms");

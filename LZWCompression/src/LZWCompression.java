@@ -92,7 +92,7 @@ public class LZWCompression {
 }
 	
 	public void output() throws IOException {
-		Path path = Paths.get("encodeTest.bin");
+		Path path = Paths.get("output1.bin");
 		for(int val: outputIntegers){ //for loop in order to construct one long string of binary representing all dictionary values used
 			String result = formatBinary(val, byteSize);
 			outputString.append(result);
@@ -121,6 +121,6 @@ public class LZWCompression {
 	}
 	
 	public static void main (String [] args) throws IOException { //main to test that it works.
-		LZWCompression w = new LZWCompression("Untitled 1", 9);
+		LZWCompression w = new LZWCompression("lzw-file1.txt", 9);
 	}
 }
